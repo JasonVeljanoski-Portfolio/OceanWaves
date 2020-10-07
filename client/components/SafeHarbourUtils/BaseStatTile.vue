@@ -9,19 +9,8 @@
 </template>
 
 <script>
-import BaseIconDifficulty from '@/components/Utils/SVG/BaseIconDifficulty'
-import BaseIconPencile from '@/components/Utils/SVG/BaseIconPencile'
-import BaseBlogTileArt from '@/components/Blog/BaseBlogTileArt'
-import BaseNumberAnimate from '@/components/SafeHarbourUtils/BaseNumberAnimate'
-
 export default {
   name: 'BaseBlogTile',
-  components: {
-    BaseIconDifficulty,
-    BaseIconPencile,
-    BaseBlogTileArt,
-    BaseNumberAnimate
-  },
   // image should have 16:9 aspect ratio
   props: {
     title: {
