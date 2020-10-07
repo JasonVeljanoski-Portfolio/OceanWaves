@@ -72,7 +72,7 @@ export default {
 
     const style = {fontsize: '12px', stroke: '1.5px', navy: '#285166' ,grey: '#515b6e'}
     const colour = {red: '#ec6d5f', green: '#27c9b8', blue: '#2caaca', navy: '#285166', dark: '#2d4051'}
-    const stroke = {linewidth: 1.5, pointwidth: 1}
+    const stroke = {linewidth: 1.5, pointwidth: 6}
 
     const scales = {
       'puOr11': ['#7f3b08', '#b35806', '#e08214', '#fdb863', '#fee0b6', '#f7f7f7', '#d8daeb', '#b2abd2', '#8073ac', '#542788', '#2d004b'],
@@ -105,7 +105,7 @@ export default {
         // .attr('stroke', colour.red)
         // .attr('fill', colour.red)
         .attr('cursor', 'pointer')
-        .attr('r', stroke.pointwidth*2.5)
+        .attr('r', stroke.pointwidth*1.5)
 
       // Specify where to put label of text
       svg
@@ -220,10 +220,11 @@ export default {
       .attr('class', 'rottPeakPeriod')
       .attr('cx', (d) => mapHelper( d.CottPeakPeriod ) * Math.cos(angleHelper(d.CottDirection)) )
       .attr('cy', (d) => mapHelper( d.CottPeakPeriod ) * Math.sin(angleHelper(d.CottDirection)) )
-      .attr('r', 1)
-      .attr('fill', style.navy)
+      .attr('r', 6)
+      // .attr('fill', style.navy)
+      .attr('fill', (d) => colors( (d.CottHeight - this.cottStats.min) / (this.cottStats.max - this.cottStats.min) ) )
       .attr('stroke', (d) => colors( (d.CottHeight - this.cottStats.min) / (this.cottStats.max - this.cottStats.min) ) )
-      .attr('stroke-width', 10)
+      .attr('stroke-width', 0)
       .on('mouseover', mouseoverCottPeriod)
       .on('mouseleave', mouseleave)
 
@@ -377,7 +378,7 @@ export default {
 
     const style = {fontsize: '12px', stroke: '1.5px', navy: '#285166' ,grey: '#515b6e'}
     const colour = {red: '#ffce00', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
-    const stroke = {linewidth: 1.5, pointwidth: 1}
+    const stroke = {linewidth: 1.5, pointwidth: 6}
 
     const scales = {
       'puOr11': ['#7f3b08', '#b35806', '#e08214', '#fdb863', '#fee0b6', '#f7f7f7', '#d8daeb', '#b2abd2', '#8073ac', '#542788', '#2d004b'],
@@ -410,7 +411,7 @@ export default {
         // .attr('stroke', colour.red)
         // .attr('fill', colour.red)
         .attr('cursor', 'pointer')
-        .attr('r', stroke.pointwidth*2.5)
+        .attr('r', stroke.pointwidth*1.5)
 
       // Specify where to put label of text
       svg
@@ -525,10 +526,11 @@ export default {
       .attr('class', 'rottPeakPeriod')
       .attr('cx', (d) => mapHelper( d.CottPeakPeriod ) * Math.cos(angleHelper(d.CottDirection)) )
       .attr('cy', (d) => mapHelper( d.CottPeakPeriod ) * Math.sin(angleHelper(d.CottDirection)) )
-      .attr('r', 1)
-      .attr('fill', style.navy)
+      .attr('r', 6)
+      // .attr('fill', style.navy)
       .attr('stroke', (d) => colors( (d.CottHeight - this.cottStats.min) / (this.cottStats.max - this.cottStats.min) ) )
-      .attr('stroke-width', 10)
+      .attr('fill', (d) => colors( (d.CottHeight - this.cottStats.min) / (this.cottStats.max - this.cottStats.min) ) )
+      .attr('stroke-width', 0)
       .on('mouseover', mouseoverCottPeriod)
       .on('mouseleave', mouseleave)
 
