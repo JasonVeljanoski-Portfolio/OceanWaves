@@ -1,36 +1,41 @@
 <template>
-  <ul class="icon-list flexbox">
-    <a
-      v-if="hasFacebook"
-      :href="linkFacebook"
-      target="_blank"
-      class="icon-item"
-    >
-      <BaseIconFacebook />
-    </a>
-    <a
-      v-if="hasInstagram"
-      :href="linkInstagram"
-      target="_blank"
-      class="icon-item"
-    >
-      <BaseIconInstagram />
-    </a>
-    <a
-      v-if="hasLinkedin"
-      :href="linkLinkedin"
-      target="_blank"
-      class="icon-item"
-    >
-      <BaseIconLinkedin />
-    </a>
-    <a v-if="hasTwitter" :href="linkTwitter" target="_blank" class="icon-item">
-      <BaseIconTwitter />
-    </a>
-    <a v-if="hasYoutube" :href="linkYoutube" target="_blank" class="icon-item">
-      <BaseIconYoutube />
-    </a>
-  </ul>
+  <div>
+    <ul class="icon-list flexbox">
+      <a
+        v-if="hasFacebook"
+        :href="linkFacebook"
+        target="_blank"
+        class="icon-item"
+      >
+        <BaseIconFacebook />
+      </a>
+      <a
+        v-if="hasInstagram"
+        :href="linkInstagram"
+        target="_blank"
+        class="icon-item"
+      >
+        <BaseIconInstagram />
+      </a>
+      <a
+        v-if="hasLinkedin"
+        :href="linkLinkedin"
+        target="_blank"
+        class="icon-item"
+      >
+        <BaseIconLinkedin />
+      </a>
+      <a v-if="hasTwitter" :href="linkTwitter" target="_blank" class="icon-item">
+        <BaseIconTwitter />
+      </a>
+      <a v-if="hasYoutube" :href="linkYoutube" target="_blank" class="icon-item">
+        <BaseIconYoutube />
+      </a>
+      <div v-if="hasWeChat" class="icon-item">
+        <BaseIconWeChat @toggle="$emit('togglewechat')" />
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -39,6 +44,7 @@ import BaseIconInstagram from '@/components/Utils/SVG/social/BaseIconInstagram'
 import BaseIconLinkedin from '@/components/Utils/SVG/social/BaseIconLinkedin'
 import BaseIconTwitter from '@/components/Utils/SVG/social/BaseIconTwitter'
 import BaseIconYoutube from '@/components/Utils/SVG/social/BaseIconYoutube'
+import BaseIconWeChat from '@/components/Utils/SVG/social/BaseIconWeChat'
 
 export default {
   name: 'BaseSocialMedia',
@@ -47,7 +53,8 @@ export default {
     BaseIconInstagram,
     BaseIconLinkedin,
     BaseIconTwitter,
-    BaseIconYoutube
+    BaseIconYoutube,
+    BaseIconWeChat
   },
   props: {
     hasFacebook: {
@@ -81,6 +88,14 @@ export default {
     hasYoutube: {
       type: Boolean,
       require: true,
+      validator(value) {
+        return typeof value === 'boolean'
+      }
+    },
+    hasWeChat: {
+      type: Boolean,
+      require: false,
+      default: false,
       validator(value) {
         return typeof value === 'boolean'
       }
@@ -138,6 +153,14 @@ export default {
         const web = /^https?:\/\/(.*)/gi
         const regex = new RegExp(web)
         return value.match(regex)
+      }
+    },
+    linkWeChat: {
+      type: String,
+      require: false,
+      default: 'sampleWeChatID',
+      validator(value) {
+        return typeof(value) === 'string'
       }
     }
   }

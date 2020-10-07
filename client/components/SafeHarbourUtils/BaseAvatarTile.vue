@@ -9,16 +9,19 @@
         </div>
 
         <BaseSocialMedia
+            @togglewechat="$emit('togglewechat', linkWeChat)"
             :has-facebook="hasFacebook"
             :has-instagram="hasInstagram"
             :has-linkedin="hasLinkedin"
             :has-twitter="hasTwitter"
             :has-youtube="hasYoutube"
+            :hasWeChat="hasWeChat"
             :link-linkedin="linkLinkedin"
             :link-facebook="linkFacebook"
             :link-instagram="linkInstagram"
             :link-youtube="linkYoutube"
             :link-twitter="linkTwitter"
+            :linkWeChat="linkWeChat"
         />
       </section>
     </div>
@@ -83,6 +86,14 @@ export default {
         return typeof value === 'boolean'
       }
     },
+    hasWeChat: {
+      type: Boolean,
+      require: false,
+      default: false,
+      validator(value) {
+        return typeof value === 'boolean'
+      }
+    },
     linkFacebook: {
       type: String,
       require: false,
@@ -136,6 +147,14 @@ export default {
         const web = /^https?:\/\/(.*)/gi
         const regex = new RegExp(web)
         return value.match(regex)
+      }
+    },
+    linkWeChat: {
+      type: String,
+      require: false,
+      default: 'sampleWeChatID',
+      validator(value) {
+        return typeof(value) === 'string'
       }
     }
   }

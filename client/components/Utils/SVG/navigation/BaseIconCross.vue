@@ -33,6 +33,7 @@ svg:hover
 .cover
   width 20px
   margin 10px
+  padding-top 5px
 
 .cls-1
   stroke #777
