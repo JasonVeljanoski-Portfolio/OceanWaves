@@ -71,11 +71,13 @@
     </div>
 
 
-    <div v-if="isWechat" class="wechatbox flexbox">
-      <div>id: <span style="font-style: italic">{{ wechatid }}</span></div>
-      <div class="spacer" />
-      <BaseIconCross @toggle="isWechat=false" />
-    </div>
+    <transition name="fade">
+      <div v-if="isWechat" class="wechatbox flexbox">
+        <div>id: <span style="font-style: italic">{{ wechatid }}</span></div>
+        <div class="spacer" />
+        <BaseIconCross @toggle="isWechat=false" />
+      </div>
+    </transition>
 
 
   </div>
