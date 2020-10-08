@@ -13,9 +13,19 @@
 
 
       <div :key="componentKey">
-        <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />
-        <TheOceanPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="data.slice(0, upperbound)" />
-        <TheOceanRadar v-show="activeGraphItem === graphitmes[2]" :data="data.slice(0,upperbound)"/>
+
+        <div v-if="showForecast">
+          {{ forecast[0].slice(0, 5) }}
+          <TheForecastWaveHeight v-show="activeGraphItem === graphitmes[0]" />
+          <TheForecastPeakPeriod v-show="activeGraphItem === graphitmes[1]" />
+          <TheForecastDirection v-show="activeGraphItem === graphitmes[2]" />
+        </div>
+        <div v-else>
+          <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />
+          <TheOceanPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="data.slice(0, upperbound)" />
+          <TheOceanRadar v-show="activeGraphItem === graphitmes[2]" :data="data.slice(0,upperbound)"/>
+        </div>
+  
       </div>
 
     </div>
@@ -30,6 +40,9 @@
 // import { mapGetters, mapActions } from 'vuex'
 import BaseContainer from '@/components/Utils/BaseContainer'
 import BaseToggleRack from '@/components/Utils/BaseToggleRack'
+import TheForecastWaveHeight from '@/components/D3Visualisations/TheForecastWaveHeight'
+import TheForecastPeakPeriod from '@/components/D3Visualisations/TheForecastPeakPeriod'
+import TheForecastDirection from '@/components/D3Visualisations/TheForecastDirection'
 import TheOceanWaveHeight from '@/components/D3Visualisations/TheOceanWaveHeight'
 import TheOceanPeakPeriod from '@/components/D3Visualisations/TheOceanPeakPeriod'
 import TheOceanRadar from '@/components/D3Visualisations/TheOceanRadar'
@@ -40,6 +53,9 @@ export default {
   components: {
     BaseContainer,
     BaseToggleRack,
+    TheForecastWaveHeight,
+    TheForecastPeakPeriod,
+    TheForecastDirection,
     TheOceanWaveHeight,
     TheOceanPeakPeriod,
     TheOceanRadar,
@@ -47,17 +63,18 @@ export default {
   },
   data() {
       return {
+          showForecast: true,
           activeGraphItem: 'Wave Height',
           graphitmes: ['Wave Height', 'Peak Period', 'Direction'],
-          scaleitems: ['Last Day', 'Last Week', 'Last Month'],
+          scaleitems: ['12hr Forecast', 'Last Day', 'Last Week', 'Last Month'],
           upperbound: 50,
           componentKey: 0,
-          time: 'Last Day'
+          time: 'Last Day',
       }
   },
   async asyncData({ $axios }) {
     const { data } = await $axios.$get('/oceanwaves')
-    return { data: data.data, stats: data.summary }
+    return { data: data.data, stats: data.summary, forecast: data.forecast }
   },
   methods: {
       forceRerender() {
@@ -67,17 +84,30 @@ export default {
           this.activeGraphItem = event
       },
       reScale(event) {
+
+        // deal with forecast button separetly
         if (event === this.scaleitems[0]) {
+            this.showForecast = true
+            return 
+        }
+        
+        // deal with normal day, week, month time scales
+        this.showForecast = false // reset
+
+        if (event === this.scaleitems[1]) {
             this.upperbound = 50  // rescale graph
         }
-        else if (event === this.scaleitems[1]) {
+        else if (event === this.scaleitems[2]) {
             this.upperbound = 350
         }
-        else if (event === this.scaleitems[2]) {
+        else if (event === this.scaleitems[3]) {
             this.upperbound = 1400
         }
+
         this.time = event     // update time for summary stats
         this.forceRerender()
+
+
       }
   }
 //   methods: {

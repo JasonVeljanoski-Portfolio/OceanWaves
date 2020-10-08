@@ -52,15 +52,42 @@ def oceanwaves():
   # -------------------------------------
 
   df = pd.read_csv('data/ocean-waves.csv')
+
+  # -------------------------------------
+  
+
+  # MAKE DUMMY FORECAST DATA ------------
+
+  # get last 18hrs (6hrs of real data + 12hr 'forecast') (38 rows)
+  last38 = df.tail(38)
+  # 6hrs == 12.5 data points
+  # use first 6hrs of last38 to represent 6hrs before forecast
+  # the next 12hrs will represent the DUMMY forecast
+  fake6hrBeforecast = last38.head(13)
+  dummyForecast = last38.tail(25)
+  
+  # convert to dict
+  fake6hrBeforecast_data = fake6hrBeforecast.to_dict(orient='records')
+  dummyForecast_data = dummyForecast.to_dict(orient='records')
+
+  # convert to array [last 6hrs, next 12hrs]
+  arrayForecast = [fake6hrBeforecast_data,dummyForecast_data]
+
+
+  # --------------------------------------
+
+
+
+  # --------------------------------------
+
   chart_data = df.to_dict(orient='records')
 
 
 
-  data['data'] = { 'data': chart_data, 'summary': stats }
+  data['data'] = { 'data': chart_data, 'summary': stats, 'forecast': arrayForecast }
   data['status'] = 200
 
   return jsonify(data)
-
 
 
 @app.route('/historywaves')
