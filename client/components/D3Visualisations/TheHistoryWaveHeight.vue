@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="TheOceanPeakPeriod"></div>
+    <div id="TheOceanWaveHeight"></div>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import * as d3 from 'd3'
 
 export default {
-  name: 'TheOceanPeakPeriod',
+  name: 'TheOceanWaveHeight',
   props: {
     data: {
       type: Array,
@@ -24,7 +24,7 @@ export default {
       width = 1000 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom
 
-    const colour = {red: '#ffce00', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
+    const colour = {red: '#ec6d5f', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
     const legend = {xpos: 20, ypos: 0}
     const stroke = {linewidth: 1.5, pointwidth: 1}
 
@@ -50,10 +50,10 @@ export default {
           return x(parseDateTime(d.DateTime)) - 30
         })
         .attr('y', () => {
-          return y(d.CottPeakPeriod) - 15
+          return y(d.CottHeight) - 15
         })
         .text(() => {
-          return parseFloat(d.CottPeakPeriod).toFixed(2)
+          return parseFloat(d.CottHeight).toFixed(2)
         }) // Value of the text
     }
 
@@ -74,10 +74,10 @@ export default {
           return x(parseDateTime(d.DateTime)) - 30
         })
         .attr('y', () => {
-          return y(d.RottPeakPeriod) - 15
+          return y(d.CottHeightHistory) - 15
         })
         .text(() => {
-          return parseFloat(d.RottPeakPeriod).toFixed(2)
+          return parseFloat(d.CottHeightHistory).toFixed(2)
         }) // Value of the text
     }
 
@@ -97,57 +97,57 @@ export default {
         // TOGGLE ROTTNEST GRAPH
     const toggleRott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".rottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".rottHeight").style("opacity")
         // Change the opacity: from 0 to 1 or from 1 to 0
-        d3.selectAll(".rottPeakPeriod").transition().style("opacity", currentOpacity == 0 ? 1:0)
+        d3.selectAll(".rottHeight").transition().style("opacity", currentOpacity == 0 ? 1:0)
     }
 
     // TOGGLE COTTESLOE GRAPH
     const toggleCott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".cottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".cottHeight").style("opacity")
         // Change the opacity: from 0 to 1 or from 1 to 0
-        d3.selectAll(".cottPeakPeriod").transition().style("opacity", currentOpacity == 0 ? 1:0)
+        d3.selectAll(".cottHeight").transition().style("opacity", currentOpacity == 0 ? 1:0)
     }
 
     // MOUSEOVER LEGEND ROTTNEST
     const mouseoverLegendRott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".rottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".rottHeight").style("opacity")
 
         if (currentOpacity == 1)
             // Change the opacity: from 0 to 1 or from 1 to 0
-            d3.selectAll(".rottPeakPeriod").transition().style("opacity", 0.3)
+            d3.selectAll(".rottHeight").transition().style("opacity", 0.3)
     }
 
     // MOUSEOVER LEGEND COTTESLOE
     const mouseoverLegendCott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".cottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".cottHeight").style("opacity")
 
         if (currentOpacity == 1)
             // Change the opacity: from 0 to 1 or from 1 to 0
-            d3.selectAll(".cottPeakPeriod").transition().style("opacity", 0.3)
+            d3.selectAll(".cottHeight").transition().style("opacity", 0.3)
     }
 
     // MOUSELEAVE LEGEND COTTESLOE
     const mouseleaveLegendCott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".cottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".cottHeight").style("opacity")
 
         if (currentOpacity != 0)
             // Change the opacity: from 0 to 1 or from 1 to 0
-            d3.selectAll(".cottPeakPeriod").transition().style("opacity", 1)
+            d3.selectAll(".cottHeight").transition().style("opacity", 1)
     }
 
     // MOUSELEAVE LEGEND ROTTNEST
     const mouseleaveLegendRott = function(d) {
         // is the element currently visible ?
-        let currentOpacity = d3.selectAll(".rottPeakPeriod").style("opacity")
+        let currentOpacity = d3.selectAll(".rottHeight").style("opacity")
 
         if (currentOpacity != 0)
             // Change the opacity: from 0 to 1 or from 1 to 0
-            d3.selectAll(".rottPeakPeriod").transition().style("opacity", 1)
+            d3.selectAll(".rottHeight").transition().style("opacity", 1)
     }
     // --------------------------------------------------------------------------------------
 
@@ -155,7 +155,7 @@ export default {
     // [ BUILD D3 GRAPHIC ] -----------------------------------------------------------------
     // CONSTRUCT <svg> CONTAINER
     let svg = d3
-      .select('#TheOceanPeakPeriod')
+      .select('#TheOceanWaveHeight')
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
@@ -178,7 +178,7 @@ export default {
     // ADD Y AXIS
     const y = d3
       .scaleLinear()
-      .domain([ 0, d3.max(this.data, (d) => { return d.RottPeakPeriod }), ]) // bound Y by RottHeight as Rott >> Cott
+      .domain([ 0, d3.max(this.data, (d) => { return d.CottHeightHistory }), ]) // bound Y by RottHeight as Rott >> Cott
       .range([height, 0])
     svg
       .append('g')
@@ -194,23 +194,23 @@ export default {
       .attr('fill', 'none')
       .attr('stroke', colour.blue)
       .attr('stroke-width', stroke.linewidth)
-      .attr('class', 'cottPeakPeriod')
+      .attr('class', 'cottHeight')
       .attr('d',
         d3.line()
           .x((d) => { return x(parseDateTime(d.DateTime)) })
-          .y((d) => { return y(d.CottPeakPeriod) })
+          .y((d) => { return y(d.CottHeight) })
       )
 
     // ADD INSTANCE POINTS
     svg
       .append('g')
-      .selectAll('cottDots')
+      .selectAll('dot')
       .data(this.data)
       .enter()
       .append('circle')
-      .attr('class', 'cottPeakPeriod')
+      .attr('class', 'cottHeight')
       .attr('cx', (d) => { return x(parseDateTime(d.DateTime)) })
-      .attr('cy', (d) => {  return y(d.CottPeakPeriod) })
+      .attr('cy', (d) => {  return y(d.CottHeight) })
       .attr('r', 1)
       .attr('fill', colour.navy)
       .attr('stroke', colour.navy)
@@ -228,23 +228,23 @@ export default {
       .attr('fill', 'none')
       .attr('stroke', colour.red)
       .attr('stroke-width', stroke.linewidth)
-      .attr('class', 'rottPeakPeriod')
+      .attr('class', 'rottHeight')
       .attr('d',
         d3.line()
           .x((d) => { return x(parseDateTime(d.DateTime)) })
-          .y((d) => { return y(d.RottPeakPeriod) })
+          .y((d) => { return y(d.CottHeightHistory) })
       )
 
     // ADD INSTANCE POINTS
     svg
       .append('g')
-      .selectAll('rottDots')
+      .selectAll('dot')
       .data(this.data)
       .enter()
       .append('circle')
-      .attr('class', 'rottPeakPeriod')
+      .attr('class', 'rottHeight')
       .attr('cx', (d) => { return x(parseDateTime(d.DateTime)) })
-      .attr('cy', (d) => { return y(d.RottPeakPeriod) })
+      .attr('cy', (d) => { return y(d.CottHeightHistory) })
       .attr('r', 1)
       .attr('fill', colour.navy)
       .attr('stroke', colour.navy)
@@ -257,8 +257,8 @@ export default {
     // [ Create Legend ] --------------------------------------------------------------------
     svg.append("circle").attr("cx", legend.xpos).attr("cy", legend.ypos).attr("r", 6).style("fill", colour.red).style("cursor", "pointer").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
     svg.append("circle").attr("cx",legend.xpos).attr("cy",legend.ypos + 24).attr("r", 6).style("fill", colour.blue).style("cursor", "pointer").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
-    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 1).text("Recorded Rottnest Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
-    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 25).text("Predicted Cottesloe Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
+    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 1).text("Predicted Cottesloe Wave Height").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
+    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 25).text("Recorded Cottesloe Wave Height").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
     // --------------------------------------------------------------------------------------
 
   }
@@ -267,7 +267,4 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
-
-// #TheOceanPeakPeriod
-//   overflow hidden
 </style>

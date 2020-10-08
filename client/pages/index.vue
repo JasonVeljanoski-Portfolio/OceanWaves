@@ -3,7 +3,14 @@
     <BaseContainer @itemtoggle="graphToggleHandler($event)" :rackitems="graphitmes" :description="activeGraphItem" logo-file-name="safeharbourMini.svg" width="100%">
     <div>
 
-      <BaseToggleRack @toggle="reScale($event)" :items="scaleitems" />
+      <div class="flexbox queue">
+
+        <h3>Forecast Reports</h3>
+        <div class="spacer" />
+        <BaseToggleRack @toggle="reScale($event)" :items="scaleitems" />
+
+      </div>
+
 
       <div :key="componentKey">
         <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />
@@ -90,6 +97,15 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
+
+h3
+  margin 0
+
+.spacer
+  flex 1 1 auto
+
+.queue
+  padding 5px
 
 .flexcontainer
    display flex

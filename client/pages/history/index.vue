@@ -3,17 +3,23 @@
     <BaseContainer @itemtoggle="graphToggleHandler($event)" :rackitems="graphitmes" :description="activeGraphItem" logo-file-name="safeharbourMini.svg" width="100%">
     <div>
 
-      <BaseToggleRack @toggle="reScale($event)" :items="scaleitems" />
+      <div class="flexbox queue">
+
+        <h3>History Reports</h3>
+        <div class="spacer" />
+        <BaseToggleRack @toggle="reScale($event)" :items="scaleitems" />
+
+      </div>
 
       <div :key="componentKey">
-        <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />
-        <TheOceanPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="data.slice(0, upperbound)" />
-        <TheOceanRadar v-show="activeGraphItem === graphitmes[2]" :data="data.slice(0,upperbound)"/>
+        <TheHistoryWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="history.slice(0, upperbound)" />
+        <TheHistoryPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="history.slice(0, upperbound)" />
+        <TheHistoryDirection v-show="activeGraphItem === graphitmes[2]" :data="history.slice(0,upperbound)"/>
       </div>
 
     </div>
     </BaseContainer>
-    <TheStatsRack :stats="stats" :time="time" :graph="activeGraphItem" />
+    <TheHistoryStatRack :stats="stats" :time="time" :graph="activeGraphItem" />
 
 
   </div>
@@ -23,20 +29,24 @@
 // import { mapGetters, mapActions } from 'vuex'
 import BaseContainer from '@/components/Utils/BaseContainer'
 import BaseToggleRack from '@/components/Utils/BaseToggleRack'
-import TheOceanWaveHeight from '@/components/D3Visualisations/TheOceanWaveHeight'
+import TheHistoryWaveHeight from '@/components/D3Visualisations/TheHistoryWaveHeight'
+import TheHistoryPeakPeriod from '@/components/D3Visualisations/TheHistoryPeakPeriod'
+import TheHistoryDirection from '@/components/D3Visualisations/TheHistoryDirection'
 import TheOceanPeakPeriod from '@/components/D3Visualisations/TheOceanPeakPeriod'
 import TheOceanRadar from '@/components/D3Visualisations/TheOceanRadar'
-import TheStatsRack from '@/components/SafeHarbourUtils/TheStatsRack'
+import TheHistoryStatRack from '@/components/SafeHarbourUtils/TheHistoryStatRack'
 
 export default {
   name: 'D3Demos',
   components: {
     BaseContainer,
     BaseToggleRack,
-    TheOceanWaveHeight,
+    TheHistoryWaveHeight,
+    TheHistoryPeakPeriod,
+    TheHistoryDirection,
     TheOceanPeakPeriod,
     TheOceanRadar,
-    TheStatsRack
+    TheHistoryStatRack
   },
   data() {
       return {
@@ -49,8 +59,8 @@ export default {
       }
   },
   async asyncData({ $axios }) {
-    const { data } = await $axios.$get('/oceanwaves')
-    return { data: data.data, stats: data.summary }
+    const { data } = await $axios.$get('/historywaves')
+    return { history: data.history, stats: data.summary_history }
   },
   methods: {
       forceRerender() {
@@ -90,6 +100,15 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
+
+h3
+  margin 0
+
+.spacer
+  flex 1 1 auto
+
+.queue
+  padding 5px
 
 .flexcontainer
    display flex

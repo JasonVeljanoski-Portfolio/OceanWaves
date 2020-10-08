@@ -24,7 +24,7 @@ export default {
       width = 1000 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom
 
-    const colour = {red: '#ffce00', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
+    const colour = {red: '#ec6d5f', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
     const legend = {xpos: 20, ypos: 0}
     const stroke = {linewidth: 1.5, pointwidth: 1}
 
@@ -74,10 +74,10 @@ export default {
           return x(parseDateTime(d.DateTime)) - 30
         })
         .attr('y', () => {
-          return y(d.RottPeakPeriod) - 15
+          return y(d.CottPeakPeriodHistory) - 15
         })
         .text(() => {
-          return parseFloat(d.RottPeakPeriod).toFixed(2)
+          return parseFloat(d.CottPeakPeriodHistory).toFixed(2)
         }) // Value of the text
     }
 
@@ -178,7 +178,7 @@ export default {
     // ADD Y AXIS
     const y = d3
       .scaleLinear()
-      .domain([ 0, d3.max(this.data, (d) => { return d.RottPeakPeriod }), ]) // bound Y by RottHeight as Rott >> Cott
+      .domain([ 0, d3.max(this.data, (d) => { return d.CottPeakPeriodHistory }), ]) // bound Y by RottHeight as Rott >> Cott
       .range([height, 0])
     svg
       .append('g')
@@ -232,7 +232,7 @@ export default {
       .attr('d',
         d3.line()
           .x((d) => { return x(parseDateTime(d.DateTime)) })
-          .y((d) => { return y(d.RottPeakPeriod) })
+          .y((d) => { return y(d.CottPeakPeriodHistory) })
       )
 
     // ADD INSTANCE POINTS
@@ -244,7 +244,7 @@ export default {
       .append('circle')
       .attr('class', 'rottPeakPeriod')
       .attr('cx', (d) => { return x(parseDateTime(d.DateTime)) })
-      .attr('cy', (d) => { return y(d.RottPeakPeriod) })
+      .attr('cy', (d) => { return y(d.CottPeakPeriodHistory) })
       .attr('r', 1)
       .attr('fill', colour.navy)
       .attr('stroke', colour.navy)
@@ -257,8 +257,8 @@ export default {
     // [ Create Legend ] --------------------------------------------------------------------
     svg.append("circle").attr("cx", legend.xpos).attr("cy", legend.ypos).attr("r", 6).style("fill", colour.red).style("cursor", "pointer").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
     svg.append("circle").attr("cx",legend.xpos).attr("cy",legend.ypos + 24).attr("r", 6).style("fill", colour.blue).style("cursor", "pointer").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
-    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 1).text("Recorded Rottnest Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
-    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 25).text("Predicted Cottesloe Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
+    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 1).text("Predicted Cottesloe Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleRott).on("mouseover", mouseoverLegendRott).on("mouseleave", mouseleaveLegendRott)
+    svg.append("text").attr("x", legend.xpos + 18).attr("y", legend.ypos + 25).text("Recorded Cottesloe Peak Period").style("cursor", "pointer").style("font-size", "15px").attr("alignment-baseline","middle").on("click", toggleCott).on("mouseover", mouseoverLegendCott).on("mouseleave", mouseleaveLegendCott)
     // --------------------------------------------------------------------------------------
 
   }
