@@ -2,7 +2,7 @@
   <div class="flexcontainer">
     <BaseStatTile
       :title="`${this.graph} Confidence Score`"
-      :number="statConfidenceVal"
+      :number="confidence"
       :gtThreshold="90"
       :ltThreshold="89"
       description="This confidence comes from being very confident about our results."
@@ -10,7 +10,7 @@
     />
     <BaseStatTile
       :title="`Max Wave Height in ${this.time}`"
-      :number="statTimeObj.maxWaveHeight"
+      :number="height"
       :gtThreshold="1"
       :ltThreshold="0.94"
       :flip="true"
@@ -19,7 +19,7 @@
     />
     <BaseStatTile
       :title="`Max Wave Period in ${this.time}`"
-      :number="statTimeObj.maxWavePeriod"
+      :number="period"
       :gtThreshold="24"
       :ltThreshold="20"
       :flip="true"
@@ -39,19 +39,32 @@ export default {
     BaseStatTile
   },
   props: {
-    stats: {
-        type: Object,
+    confidence: {
+        type: Number,
         required: true,
-        default: 0,
         validator(value) {
-            return typeof value === 'object'
+            return typeof value === 'number'
+        }
+    },
+    height: {
+        type: Number,
+        required: true,
+        validator(value) {
+            return typeof value === 'number'
+        }
+    },
+    period: {
+        type: Number,
+        required: true,
+        validator(value) {
+            return typeof value === 'number'
         }
     },
     time: {
         type: String,
         required: true,
         validator(value) {
-            return typeof value === 'string' && (value === '12hr Forecast' || value === 'Last Day' || value === 'Last Week' || value === 'Last Month')
+            return typeof value === 'string' && (value === 'Forecast' || value === 'Last Day' || value === 'Last Week' || value === 'Last Month')
         }
     },
     graph: {
@@ -62,46 +75,46 @@ export default {
         }
     }
   },
-  data() {
-      return {
-          statTimeObj: this.stats.day,
-          statConfidenceVal: this.stats.confidence.waveHeight
-      }
-  },
-  mounted() {
-      this.renderStats
-  },
-  computed: {
-    renderStats() {
-        // TIME VALUE
-        if (this.time === '12hr Forecast')
-            this.statTimeObj = this.stats.twelveHrForecast
-        else if (this.time === 'Last Day')
-            this.statTimeObj = this.stats.day
-        else if (this.time === 'Last Week')
-            this.statTimeObj = this.stats.week
-        else if (this.time === 'Last Month')
-            this.statTimeObj = this.stats.month  
+  // data() {
+  //     return {
+  //         statTimeObj: this.stats.day,
+  //         statConfidenceVal: this.stats.confidence.waveHeight
+  //     }
+  // },
+  // mounted() {
+  //     this.renderStats
+  // },
+  // computed: {
+  //   renderStats() {
+  //       // TIME VALUE
+  //       if (this.time === '12hr Forecast')
+  //           this.statTimeObj = this.stats.twelveHrForecast
+  //       else if (this.time === 'Last Day')
+  //           this.statTimeObj = this.stats.day
+  //       else if (this.time === 'Last Week')
+  //           this.statTimeObj = this.stats.week
+  //       else if (this.time === 'Last Month')
+  //           this.statTimeObj = this.stats.month  
         
-        // CONFIDENCE SCORE
-        // if (this.time === '12hr Forecast')
-        //     this.statConfidenceVal = this.stats.confidence.twelveHrForecast
-        if (this.graph === 'Wave Height')
-            this.statConfidenceVal = this.stats.confidence.waveHeight
-        else if (this.graph === 'Peak Period')
-            this.statConfidenceVal = this.stats.confidence.peakPeriod
-        else if (this.graph === 'Direction')
-            this.statConfidenceVal = this.stats.confidence.direction
-    }
-  },
-  watch: {
-    time: function () {
-      this.renderStats
-    },
-    graph: function() {
-        this.renderStats
-    }
-  },
+  //       // CONFIDENCE SCORE
+  //       // if (this.time === '12hr Forecast')
+  //       //     this.statConfidenceVal = this.stats.confidence.twelveHrForecast
+  //       if (this.graph === 'Wave Height')
+  //           this.statConfidenceVal = this.stats.confidence.waveHeight
+  //       else if (this.graph === 'Peak Period')
+  //           this.statConfidenceVal = this.stats.confidence.peakPeriod
+  //       else if (this.graph === 'Direction')
+  //           this.statConfidenceVal = this.stats.confidence.direction
+  //   }
+  // },
+  // watch: {
+  //   time: function () {
+  //     this.renderStats
+  //   },
+  //   graph: function() {
+  //       this.renderStats
+  //   }
+  // },
 }
 </script>
 

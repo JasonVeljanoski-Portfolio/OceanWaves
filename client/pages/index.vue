@@ -29,11 +29,8 @@
 
     </div>
     </BaseContainer>
-    {{ stats }}
-    <br>
-    {{ time }}
-    <TheStatsRack v-show="!showForecast" :stats="stats" :time="time" :graph="activeGraphItem" />
-    <TheForecastStatRack v-show="showForecast" :stats="stats" />
+    <TheStatsRack :confidence="confidence" :height="height" :period="period" :time="time" :graph="activeGraphItem" />
+    <!-- <TheForecastStatRack v-show="showForecast" :stats="stats" /> -->
 
   </div>
 </template>
@@ -69,16 +66,25 @@ export default {
       return {
           showForecast: true,
           activeGraphItem: 'Wave Height',
+          activeTime: 'Forecast',
           graphitmes: ['Wave Height', 'Peak Period', 'Direction'],
-          scaleitems: ['12hr Forecast', 'Last Day', 'Last Week', 'Last Month'],
+          scaleitems: ['Forecast', 'Last Day', 'Last Week', 'Last Month'],
           upperbound: 50,
           componentKey: 0,
-          time: 'Last Day',
+          time: 'Forecast',
+          confidence: 0,
+          height: 1,
+          period: 2
       }
   },
   async asyncData({ $axios }) {
     const { data } = await $axios.$get('/oceanwaves')
     return { data: data.data, stats: data.summary, forecast: data.forecast }
+  },
+  mounted() {
+    this.confidence = this.stats.forecast.confidence.waveHeight
+    this.height = this.stats.forecast.height
+    this.period = this.stats.forecast.period
   },
   methods: {
       forceRerender() {
@@ -86,29 +92,113 @@ export default {
       },
       graphToggleHandler(event) {
           this.activeGraphItem = event
+          this.reScale(this.activeTime)
       },
       reScale(event) {
+        this.activeTime = event
+        // FORECAST
+        if ( event === 'Forecast' ) {
 
-        if (event === this.scaleitems[0]) {
-            this.showForecast = true
-            return
+          // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
+          if ( this.activeGraphItem === 'Wave Height' ) {
+            this.confidence = this.stats.forecast.confidence.waveHeight
+            console.log(this.stats.forecast.confidence.waveHeight)
+          }
+          else if ( this.activeGraphItem === 'Peak Period' ) {
+            this.confidence = this.stats.forecast.confidence.peakPeriod
+            console.log(this.stats.forecast.confidence.peakPeriod)
+          }
+          else if ( this.activeGraphItem === 'Direction' ) {
+            this.confidence = this.stats.forecast.confidence.direction
+            console.log(this.stats.forecast.confidence.direction)
+          }
+          
+          this.height = this.stats.forecast.height
+          this.period = this.stats.forecast.period
+
         }
-        else if (event === this.scaleitems[1]) {
-            this.upperbound = 50  // rescale graph
-            this.showForecast = false // reset
+        else if ( event === 'Last Day' ) {  // LAST DAY
+
+
+          // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
+          if ( this.activeGraphItem == 'Wave Height' ) {
+            this.confidence = this.stats.waveHeight.confidence
+            console.log(this.stats.waveHeight.confidence)
+          }
+          else if ( this.activeGraphItem == 'Peak Period' ) {
+            this.confidence = this.stats.peakPeriod.confidence
+            console.log(this.stats.peakPeriod.confidence)
+          }
+          else if ( this.activeGraphItem == 'Direction' ) {
+            this.confidence = this.stats.direction.confidence
+            console.log(this.stats.direction.confidence)
+          }
+
+          this.height = this.stats.waveHeight.day
+          this. period = this.stats.peakPeriod.day
+
         }
-        else if (event === this.scaleitems[2]) {
-            this.upperbound = 350
-            this.showForecast = false // reset
+        else if ( event === 'Last Week' ) {
+
+          // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
+          if ( this.activeGraphItem == 'Wave Height' ) {
+            this.confidence = this.stats.waveHeight.confidence
+            console.log(this.stats.waveHeight.confidence)
+          }
+          else if ( this.activeGraphItem == 'Peak Period' ) {
+            this.confidence = this.stats.peakPeriod.confidence
+            console.log(this.stats.peakPeriod.confidence)
+          }
+          else if ( this.activeGraphItem == 'Direction' ) {
+            this.confidence = this.stats.direction.confidence
+            console.log(this.stats.direction.confidence)
+          }
+          
+          this.height = this.stats.waveHeight.week
+          this. period = this.stats.peakPeriod.week
+
         }
-        else if (event === this.scaleitems[3]) {
-            this.upperbound = 1400
-            this.showForecast = false // reset
+        else if ( event === 'Last Month' ) {
+
+          // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
+          if ( this.activeGraphItem == 'Wave Height' ) {
+            this.confidence = this.stats.waveHeight.confidence
+            console.log(this.stats.waveHeight.confidence)
+          }
+          else if ( this.activeGraphItem == 'Peak Period' ) {
+            this.confidence = this.stats.peakPeriod.confidence
+            console.log(this.stats.peakPeriod.confidence)
+          }
+          else if ( this.activeGraphItem == 'Direction' ) {
+            this.confidence = this.stats.direction.confidence
+            console.log(this.stats.direction.confidence)
+          }
+
+          this.height = this.stats.waveHeight.month
+          this. period = this.stats.peakPeriod.month
+
         }
+
+
+        // if (event === this.scaleitems[0]) {
+        //     this.showForecast = true
+        //     return
+        // }
+        // else if (event === this.scaleitems[1]) {
+        //     this.upperbound = 50  // rescale graph
+        //     this.showForecast = false // reset
+        // }
+        // else if (event === this.scaleitems[2]) {
+        //     this.upperbound = 350
+        //     this.showForecast = false // reset
+        // }
+        // else if (event === this.scaleitems[3]) {
+        //     this.upperbound = 1400
+        //     this.showForecast = false // reset
+        // }
 
         this.time = event     // update time for summary stats
         this.forceRerender()
-
 
       }
   }

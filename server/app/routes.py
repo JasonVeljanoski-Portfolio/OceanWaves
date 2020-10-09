@@ -26,23 +26,51 @@ def oceanwaves():
 
   # DUMMY STATS DATA --------------------
 
+  # stats = {
+  #   'day': {
+  #     'maxWaveHeight': 1.16,
+  #     'maxWavePeriod': 27.1
+  #     },
+  #   'week': {
+  #     'maxWaveHeight': 0.98,
+  #     'maxWavePeriod': 19.0
+  #   },
+  #   'month': {
+  #     'maxWaveHeight': 1.1,
+  #     'maxWavePeriod': 23.23
+  #   },
+  #   'confidence': {
+  #       'waveHeight': 92.3,
+  #       'peakPeriod': 89.60,
+  #       'direction': 87.3
+  #   }
+  # }
+
+
   stats = {
-    'day': {
-      'maxWaveHeight': 1.16,
-      'maxWavePeriod': 27.1
-      },
-    'week': {
-      'maxWaveHeight': 0.98,
-      'maxWavePeriod': 19.0
+    'waveHeight': {
+      'day': 1.16,
+      'week': 0.98,
+      'month': 1.1,
+      'confidence': 92.3
     },
-    'month': {
-      'maxWaveHeight': 1.1,
-      'maxWavePeriod': 23.23
+    'peakPeriod': {
+      'day': 27.1,
+      'week': 19.0,
+      'month': 23.23,
+      'confidence': 89.60
     },
-    'confidence': {
-        'waveHeight': 92.3,
-        'peakPeriod': 89.60,
-        'direction': 87.3
+    'forecast': { 
+      'height': 1.05,
+      'period': 26.3,
+      'confidence': {
+        'waveHeight': 84.1,
+        'peakPeriod': 84.2,
+        'direction': 84.3
+      }
+    },
+    'direction': {
+      'confidence': 87.3
     }
   }
 
