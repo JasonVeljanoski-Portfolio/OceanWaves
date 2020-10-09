@@ -1,16 +1,16 @@
 <template>
   <div class="flexcontainer">
     <BaseStatTile
-      :title="`${this.graph} Confidence Score`"
-      :number="statConfidenceVal"
+      :title="`12hr Forecast Confidence Score`"
+      :number="84.0"
       :gtThreshold="90"
       :ltThreshold="89"
       description="This confidence comes from being very confident about our results."
       tag="%"
     />
     <BaseStatTile
-      :title="`Max Wave Height in ${this.time}`"
-      :number="statTimeObj.maxWaveHeight"
+      :title="`Max Wave Height in 12hr Forecast`"
+      :number="100.1"
       :gtThreshold="1"
       :ltThreshold="0.94"
       :flip="true"
@@ -18,8 +18,8 @@
       tag="m"
     />
     <BaseStatTile
-      :title="`Max Wave Period in ${this.time}`"
-      :number="statTimeObj.maxWavePeriod"
+      :title="`Max Wave Period in 12hr Forecast`"
+      :number="100.2"
       :gtThreshold="24"
       :ltThreshold="20"
       :flip="true"
@@ -45,20 +45,6 @@ export default {
         default: 0,
         validator(value) {
             return typeof value === 'object'
-        }
-    },
-    time: {
-        type: String,
-        required: true,
-        validator(value) {
-            return typeof value === 'string' && (value === 'Last Day' || value === 'Last Week' || value === 'Last Month')
-        }
-    },
-    graph: {
-        type: String,
-        required: true,
-        validator(value) {
-            return typeof value === 'string' && (value === 'Wave Height' || value === 'Peak Period' || value === 'Direction')
         }
     }
   },

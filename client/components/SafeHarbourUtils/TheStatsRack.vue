@@ -51,7 +51,7 @@ export default {
         type: String,
         required: true,
         validator(value) {
-            return typeof value === 'string' && (value === 'Last Day' || value === 'Last Week' || value === 'Last Month')
+            return typeof value === 'string' && (value === '12hr Forecast' || value === 'Last Day' || value === 'Last Week' || value === 'Last Month')
         }
     },
     graph: {
@@ -74,14 +74,18 @@ export default {
   computed: {
     renderStats() {
         // TIME VALUE
-        if (this.time === 'Last Day')
+        if (this.time === '12hr Forecast')
+            this.statTimeObj = this.stats.twelveHrForecast
+        else if (this.time === 'Last Day')
             this.statTimeObj = this.stats.day
         else if (this.time === 'Last Week')
             this.statTimeObj = this.stats.week
         else if (this.time === 'Last Month')
-            this.statTimeObj = this.stats.month    
+            this.statTimeObj = this.stats.month  
         
         // CONFIDENCE SCORE
+        // if (this.time === '12hr Forecast')
+        //     this.statConfidenceVal = this.stats.confidence.twelveHrForecast
         if (this.graph === 'Wave Height')
             this.statConfidenceVal = this.stats.confidence.waveHeight
         else if (this.graph === 'Peak Period')

@@ -29,9 +29,11 @@
 
     </div>
     </BaseContainer>
-    <TheStatsRack v-if="!showForecast" :stats="stats" :time="time" :graph="activeGraphItem" />
-    <TheForecastStatRack v-else :stats="stats" :time="time" :graph="activeGraphItem" />
-
+    {{ stats }}
+    <br>
+    {{ time }}
+    <TheStatsRack v-show="!showForecast" :stats="stats" :time="time" :graph="activeGraphItem" />
+    <TheForecastStatRack v-show="showForecast" :stats="stats" />
 
   </div>
 </template>
@@ -87,23 +89,21 @@ export default {
       },
       reScale(event) {
 
-        // deal with forecast button separetly
         if (event === this.scaleitems[0]) {
             this.showForecast = true
-            return 
+            return
         }
-        
-        // deal with normal day, week, month time scales
-        this.showForecast = false // reset
-
-        if (event === this.scaleitems[1]) {
+        else if (event === this.scaleitems[1]) {
             this.upperbound = 50  // rescale graph
+            this.showForecast = false // reset
         }
         else if (event === this.scaleitems[2]) {
             this.upperbound = 350
+            this.showForecast = false // reset
         }
         else if (event === this.scaleitems[3]) {
             this.upperbound = 1400
+            this.showForecast = false // reset
         }
 
         this.time = event     // update time for summary stats

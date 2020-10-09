@@ -28,17 +28,14 @@ def oceanwaves():
 
   stats = {
     'day': {
-      'confidence': 92,
       'maxWaveHeight': 1.16,
       'maxWavePeriod': 27.1
       },
     'week': {
-      'confidence': 92,
       'maxWaveHeight': 0.98,
       'maxWavePeriod': 19.0
     },
     'month': {
-      'confidence': 92,
       'maxWaveHeight': 1.1,
       'maxWavePeriod': 23.23
     },
