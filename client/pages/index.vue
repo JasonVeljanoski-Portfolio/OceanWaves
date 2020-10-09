@@ -102,15 +102,12 @@ export default {
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem === 'Wave Height' ) {
             this.confidence = this.stats.forecast.confidence.waveHeight
-            console.log(this.stats.forecast.confidence.waveHeight)
           }
           else if ( this.activeGraphItem === 'Peak Period' ) {
             this.confidence = this.stats.forecast.confidence.peakPeriod
-            console.log(this.stats.forecast.confidence.peakPeriod)
           }
           else if ( this.activeGraphItem === 'Direction' ) {
             this.confidence = this.stats.forecast.confidence.direction
-            console.log(this.stats.forecast.confidence.direction)
           }
           
           this.height = this.stats.forecast.height
@@ -123,15 +120,12 @@ export default {
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
             this.confidence = this.stats.waveHeight.confidence
-            console.log(this.stats.waveHeight.confidence)
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
             this.confidence = this.stats.peakPeriod.confidence
-            console.log(this.stats.peakPeriod.confidence)
           }
           else if ( this.activeGraphItem == 'Direction' ) {
             this.confidence = this.stats.direction.confidence
-            console.log(this.stats.direction.confidence)
           }
 
           this.height = this.stats.waveHeight.day
@@ -143,15 +137,12 @@ export default {
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
             this.confidence = this.stats.waveHeight.confidence
-            console.log(this.stats.waveHeight.confidence)
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
             this.confidence = this.stats.peakPeriod.confidence
-            console.log(this.stats.peakPeriod.confidence)
           }
           else if ( this.activeGraphItem == 'Direction' ) {
             this.confidence = this.stats.direction.confidence
-            console.log(this.stats.direction.confidence)
           }
           
           this.height = this.stats.waveHeight.week
@@ -163,15 +154,12 @@ export default {
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
             this.confidence = this.stats.waveHeight.confidence
-            console.log(this.stats.waveHeight.confidence)
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
             this.confidence = this.stats.peakPeriod.confidence
-            console.log(this.stats.peakPeriod.confidence)
           }
           else if ( this.activeGraphItem == 'Direction' ) {
             this.confidence = this.stats.direction.confidence
-            console.log(this.stats.direction.confidence)
           }
 
           this.height = this.stats.waveHeight.month
