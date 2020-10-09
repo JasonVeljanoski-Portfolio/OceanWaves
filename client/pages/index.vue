@@ -15,10 +15,9 @@
       <div :key="componentKey">
 
         <div v-if="showForecast">
-          {{ forecast[0].slice(0, 5) }}
-          <TheForecastWaveHeight v-show="activeGraphItem === graphitmes[0]" />
-          <TheForecastPeakPeriod v-show="activeGraphItem === graphitmes[1]" />
-          <TheForecastDirection v-show="activeGraphItem === graphitmes[2]" />
+          <TheForecastWaveHeight :data="forecast" v-show="activeGraphItem === graphitmes[0]" />
+          <TheForecastPeakPeriod :data="forecast" v-show="activeGraphItem === graphitmes[1]" />
+          <TheForecastDirection :data="forecast" v-show="activeGraphItem === graphitmes[2]" />
         </div>
         <div v-else>
           <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />

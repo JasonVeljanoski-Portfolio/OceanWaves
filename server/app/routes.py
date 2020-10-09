@@ -71,8 +71,7 @@ def oceanwaves():
   dummyForecast_data = dummyForecast.to_dict(orient='records')
 
   # convert to array [last 6hrs, next 12hrs]
-  arrayForecast = [fake6hrBeforecast_data,dummyForecast_data]
-
+  arrayForecast = np.concatenate((fake6hrBeforecast_data, dummyForecast_data)).tolist() # concatenate 2 numpy arrays: row-wise
 
   # --------------------------------------
 
