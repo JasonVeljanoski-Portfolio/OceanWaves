@@ -29,7 +29,8 @@
 
     </div>
     </BaseContainer>
-    <TheStatsRack :stats="stats" :time="time" :graph="activeGraphItem" />
+    <TheStatsRack v-if="!showForecast" :stats="stats" :time="time" :graph="activeGraphItem" />
+    <TheForecastStatRack v-else :stats="stats" :time="time" :graph="activeGraphItem" />
 
 
   </div>
@@ -46,6 +47,7 @@ import TheOceanWaveHeight from '@/components/D3Visualisations/TheOceanWaveHeight
 import TheOceanPeakPeriod from '@/components/D3Visualisations/TheOceanPeakPeriod'
 import TheOceanRadar from '@/components/D3Visualisations/TheOceanRadar'
 import TheStatsRack from '@/components/SafeHarbourUtils/TheStatsRack'
+import TheForecastStatRack from '@/components/SafeHarbourUtils/TheForecastStatRack'
 
 export default {
   name: 'D3Demos',
@@ -58,7 +60,8 @@ export default {
     TheOceanWaveHeight,
     TheOceanPeakPeriod,
     TheOceanRadar,
-    TheStatsRack
+    TheStatsRack,
+    TheForecastStatRack
   },
   data() {
       return {

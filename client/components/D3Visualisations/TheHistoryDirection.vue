@@ -268,6 +268,45 @@ export default {
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
 
-// #TheOceanDirection
-//   overflow hidden
+input[type=range] 
+    width 100%
+    margin 13.2px 0
+    background-color transparent
+    -webkit-appearance none
+    border-radius 10px
+  
+  input[type=range]:focus 
+    outline none
+  
+  input[type=range]::-webkit-slider-runnable-track 
+    border 1px solid $border-color
+    border-radius 6.2px
+    width 100%
+    height 12.6px
+    cursor pointer
+  
+  input[type=range]::-webkit-slider-thumb 
+    margin-top -5px
+    width 20px
+    height 20px
+    background $navy
+    border-radius 100%
+    cursor pointer
+    -webkit-appearance: none
+  
+  
+  input[type=range]::-moz-range-track 
+    border 1px solid $border-color
+    border-radius 6.2px
+    width 100%
+    height 12.6px
+    cursor pointer
+  
+  input[type=range]::-moz-range-thumb 
+    margin-top -5px
+    width 20px
+    height 20px
+    background $blue
+    border-radius 100%
+    cursor pointer
 </style>

@@ -24,7 +24,7 @@ export default {
       width = 1000 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom
 
-    const colour = {red: '#ec6d5f', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
+    const colour = {red: '#ffce00', green: '#27c9b8', blue: '#87c7ff', navy: '#285166', dark: '#2d4051'}
     const legend = {xpos: width-250, ypos: 0}
     const stroke = {linewidth: 1.5, pointwidth: 1}
 

@@ -63,7 +63,7 @@ export default {
 
     // [ SETUP CONSTANTS ] ---------------------------------------------------------------------
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-      size = 600,
+      size = 550,
       width = size - margin.left - margin.right,
       height = size - margin.top - margin.bottom,
       radius = Math.min(width, height) / 2 - 30,
@@ -682,4 +682,47 @@ export default {
     font-size 10px
     margin 0
     padding 0
+
+
+  input[type=range] 
+    width 100%
+    margin 13.2px 0
+    background-color transparent
+    -webkit-appearance none
+    border-radius 10px
+  
+  input[type=range]:focus 
+    outline none
+  
+  input[type=range]::-webkit-slider-runnable-track 
+    border 1px solid $border-color
+    border-radius 6.2px
+    width 100%
+    height 12.6px
+    cursor pointer
+  
+  input[type=range]::-webkit-slider-thumb 
+    margin-top -5px
+    width 20px
+    height 20px
+    background $navy
+    border-radius 100%
+    cursor pointer
+    -webkit-appearance: none
+  
+  
+  input[type=range]::-moz-range-track 
+    border 1px solid $border-color
+    border-radius 6.2px
+    width 100%
+    height 12.6px
+    cursor pointer
+  
+  input[type=range]::-moz-range-thumb 
+    margin-top -5px
+    width 20px
+    height 20px
+    background $blue
+    border-radius 100%
+    cursor pointer
 </style>
