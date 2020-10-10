@@ -30,7 +30,6 @@
     </div>
     </BaseContainer>
     <TheStatsRack :confidence="confidence" :height="height" :period="period" :time="time" :graph="activeGraphItem" />
-    <!-- <TheForecastStatRack v-show="showForecast" :stats="stats" /> -->
 
   </div>
 </template>
@@ -46,7 +45,6 @@ import TheOceanWaveHeight from '@/components/D3Visualisations/TheOceanWaveHeight
 import TheOceanPeakPeriod from '@/components/D3Visualisations/TheOceanPeakPeriod'
 import TheOceanRadar from '@/components/D3Visualisations/TheOceanRadar'
 import TheStatsRack from '@/components/SafeHarbourUtils/TheStatsRack'
-import TheForecastStatRack from '@/components/SafeHarbourUtils/TheForecastStatRack'
 
 export default {
   name: 'D3Demos',
@@ -59,8 +57,7 @@ export default {
     TheOceanWaveHeight,
     TheOceanPeakPeriod,
     TheOceanRadar,
-    TheStatsRack,
-    TheForecastStatRack
+    TheStatsRack
   },
   data() {
       return {
@@ -99,6 +96,8 @@ export default {
         // FORECAST
         if ( event === 'Forecast' ) {
 
+          this.showForecast = true
+
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem === 'Wave Height' ) {
             this.confidence = this.stats.forecast.confidence.waveHeight
@@ -116,6 +115,8 @@ export default {
         }
         else if ( event === 'Last Day' ) {  // LAST DAY
 
+          this.showForecast = false
+          this.upperbound = 50  // rescale graph
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
@@ -134,6 +135,9 @@ export default {
         }
         else if ( event === 'Last Week' ) {
 
+          this.showForecast = false
+          this.upperbound = 350  // rescale graph
+
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
             this.confidence = this.stats.waveHeight.confidence
@@ -150,6 +154,9 @@ export default {
 
         }
         else if ( event === 'Last Month' ) {
+
+          this.showForecast = false
+          this.upperbound = 1400  // rescale graph
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
