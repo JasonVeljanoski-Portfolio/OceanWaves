@@ -29,7 +29,7 @@
 
     </div>
     </BaseContainer>
-    <!-- <TheStatsRack :confidence="confidence" :height="height" :period="period" :time="time" :graph="activeGraphItem" /> -->
+    <TheStatsRack :confidence="confidence" :height="height" :period="period" :time="time" :graph="activeGraphItem" />
 
   </div>
 </template>

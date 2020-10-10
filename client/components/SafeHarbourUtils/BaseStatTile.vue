@@ -99,6 +99,7 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
+@import '~static/css/transitions.styl'
 
 $w = 300px
 $h = 150px

@@ -214,6 +214,7 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~static/css/main.styl'
+@import '~static/css/transitions.styl'
 
 h3
   margin 0
