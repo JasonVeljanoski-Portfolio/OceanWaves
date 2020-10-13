@@ -20,9 +20,9 @@
           <TheHistoryForecastDirection :outcome="forecastOutcome" :data="forecast" v-show="activeGraphItem === graphitmes[2]" />
         </div>
         <div v-else>
-          <TheHistoryWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="history.slice(0, upperbound)" />
-          <TheHistoryPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="history.slice(0, upperbound)" />
-          <TheHistoryDirection v-show="activeGraphItem === graphitmes[2]" :data="history.slice(0,upperbound)"/>
+          <TheHistoryWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="historyData.history.slice(0, upperbound)" />
+          <TheHistoryPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="historyData.history.slice(0, upperbound)" />
+          <TheHistoryDirection v-show="activeGraphItem === graphitmes[2]" :data="historyData.history.slice(0,upperbound)" />
         </div>
 
       </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import BaseContainer from '@/components/Utils/BaseContainer'
 import BaseToggleRack from '@/components/Utils/BaseToggleRack'
 import TheHistoryForecastWaveHeight from '@/components/D3Visualisations/TheHistoryForecastWaveHeight'
@@ -80,12 +80,17 @@ export default {
   },
   async asyncData({ $axios }) {
     const { data } = await $axios.$get('/historywaves')
-    return { history: data.history, stats: data.summary_history, forecast: data.forecast, forecastOutcome: data.forecastOutcome }
+    return { stats: data.summary_history, forecast: data.forecast, forecastOutcome: data.forecastOutcome }
   },
   mounted() {
     this.confidence = this.stats.forecast.confidence.waveHeight
     this.height = this.stats.forecast.height
     this.period = this.stats.forecast.period
+  },
+  computed: {
+    ...mapGetters({
+      historyData: 'oceandata/getHistoryData'
+    }),
   },
   methods: {
       forceRerender() {
@@ -104,17 +109,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem === 'Wave Height' ) {
-            this.confidence = this.stats.forecast.confidence.waveHeight
+            this.confidence = this.historyData.summary_history.forecast.confidence.waveHeight
           }
           else if ( this.activeGraphItem === 'Peak Period' ) {
-            this.confidence = this.stats.forecast.confidence.peakPeriod
+            this.confidence = this.historyData.summary_history.forecast.confidence.peakPeriod
           }
           else if ( this.activeGraphItem === 'Direction' ) {
-            this.confidence = this.stats.forecast.confidence.direction
+            this.confidence = this.historyData.summary_history.forecast.confidence.direction
           }
           
-          this.height = this.stats.forecast.height
-          this.period = this.stats.forecast.period
+          this.height = this.historyData.summary_history.forecast.height
+          this.period = this.historyData.summary_history.forecast.period
 
         }
         else if ( event === 'Last Day' ) {  // LAST DAY
@@ -124,17 +129,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.historyData.summary_history.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.historyData.summary_history.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.historyData.summary_history.direction.confidence
           }
 
-          this.height = this.stats.waveHeight.day
-          this. period = this.stats.peakPeriod.day
+          this.height = this.historyData.summary_history.waveHeight.day
+          this. period = this.historyData.summary_history.peakPeriod.day
 
         }
         else if ( event === 'Last Week' ) {
@@ -144,17 +149,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.historyData.summary_history.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.historyData.summary_history.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.historyData.summary_history.direction.confidence
           }
           
-          this.height = this.stats.waveHeight.week
-          this. period = this.stats.peakPeriod.week
+          this.height = this.historyData.summary_history.waveHeight.week
+          this. period = this.historyData.summary_history.peakPeriod.week
 
         }
         else if ( event === 'Last Month' ) {
@@ -164,17 +169,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.historyData.summary_history.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.historyData.summary_history.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.historyData.summary_history.direction.confidence
           }
 
-          this.height = this.stats.waveHeight.month
-          this. period = this.stats.peakPeriod.month
+          this.height = this.historyData.summary_history.waveHeight.month
+          this. period = this.historyData.summary_history.peakPeriod.month
 
         }
 

@@ -20,9 +20,9 @@
           <TheForecastDirection :data="forecast" v-show="activeGraphItem === graphitmes[2]" />
         </div>
         <div v-else>
-          <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="data.slice(0, upperbound)" />
-          <TheOceanPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="data.slice(0, upperbound)" />
-          <TheOceanRadar v-show="activeGraphItem === graphitmes[2]" :data="data.slice(0,upperbound)"/>
+          <TheOceanWaveHeight v-show="activeGraphItem === graphitmes[0]" :data="oceanData.data.slice(0, upperbound)" />
+          <TheOceanPeakPeriod v-show="activeGraphItem === graphitmes[1]" :data="oceanData.data.slice(0, upperbound)" />
+          <TheOceanRadar v-show="activeGraphItem === graphitmes[2]" :data="oceanData.data.slice(0,upperbound)"/>
         </div>
   
       </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import BaseContainer from '@/components/Utils/BaseContainer'
 import BaseToggleRack from '@/components/Utils/BaseToggleRack'
 import TheForecastWaveHeight from '@/components/D3Visualisations/TheForecastWaveHeight'
@@ -76,7 +76,7 @@ export default {
   },
   async asyncData({ $axios }) {
     const { data } = await $axios.$get('/oceanwaves')
-    return { data: data.data, stats: data.summary, forecast: data.forecast }
+    return { stats: data.summary, forecast: data.forecast }
   },
   mounted() {
     this.confidence = this.stats.forecast.confidence.waveHeight
@@ -100,17 +100,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem === 'Wave Height' ) {
-            this.confidence = this.stats.forecast.confidence.waveHeight
+            this.confidence = this.oceanData.summary.forecast.confidence.waveHeight
           }
           else if ( this.activeGraphItem === 'Peak Period' ) {
-            this.confidence = this.stats.forecast.confidence.peakPeriod
+            this.confidence = this.oceanData.summary.forecast.confidence.peakPeriod
           }
           else if ( this.activeGraphItem === 'Direction' ) {
-            this.confidence = this.stats.forecast.confidence.direction
+            this.confidence = this.oceanData.summary.forecast.confidence.direction
           }
           
-          this.height = this.stats.forecast.height
-          this.period = this.stats.forecast.period
+          this.height = this.oceanData.summary.forecast.height
+          this.period = this.oceanData.summary.forecast.period
 
         }
         else if ( event === 'Last Day' ) {  // LAST DAY
@@ -120,17 +120,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.oceanData.summary.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.oceanData.summary.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.oceanData.summary.direction.confidence
           }
 
-          this.height = this.stats.waveHeight.day
-          this. period = this.stats.peakPeriod.day
+          this.height = this.oceanData.summary.waveHeight.day
+          this. period = this.oceanData.summary.peakPeriod.day
 
         }
         else if ( event === 'Last Week' ) {
@@ -140,17 +140,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.oceanData.summary.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.oceanData.summary.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.oceanData.summary.direction.confidence
           }
           
-          this.height = this.stats.waveHeight.week
-          this. period = this.stats.peakPeriod.week
+          this.height = this.oceanData.summary.waveHeight.week
+          this. period = this.oceanData.summary.peakPeriod.week
 
         }
         else if ( event === 'Last Month' ) {
@@ -160,17 +160,17 @@ export default {
 
           // check which models confidence to display ('Wave Height', 'Peak Period', 'Direction' models)
           if ( this.activeGraphItem == 'Wave Height' ) {
-            this.confidence = this.stats.waveHeight.confidence
+            this.confidence = this.oceanData.summary.waveHeight.confidence
           }
           else if ( this.activeGraphItem == 'Peak Period' ) {
-            this.confidence = this.stats.peakPeriod.confidence
+            this.confidence = this.oceanData.summary.peakPeriod.confidence
           }
           else if ( this.activeGraphItem == 'Direction' ) {
-            this.confidence = this.stats.direction.confidence
+            this.confidence = this.oceanData.summary.direction.confidence
           }
 
-          this.height = this.stats.waveHeight.month
-          this. period = this.stats.peakPeriod.month
+          this.height = this.oceanData.summary.waveHeight.month
+          this. period = this.oceanData.summary.peakPeriod.month
 
         }
 
@@ -196,19 +196,18 @@ export default {
         this.forceRerender()
 
       }
-  }
+  },
 //   methods: {
 //     ...mapActions({
 //       setDemoData: 'd3Demo/setDemoData', // map `this.setDemoData()` to `this.$store.dispatch('setDemoData')`
 //       setOceanData: 'oceandata/setOceanData'
 //     })
 //   },
-//   computed: {
-//     ...mapGetters({
-//       demoData: 'd3Demo/getDemoData',
-//       oceanData: 'oceandata/getOceanData'
-//     }),
-//   },
+  computed: {
+    ...mapGetters({
+      oceanData: 'oceandata/getOceanData'
+    }),
+  },
 }
 </script>
 

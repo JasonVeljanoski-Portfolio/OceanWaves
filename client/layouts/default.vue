@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import TheHeader from '@/components/Navigation/TheHeader'
 import TheSidebar from '@/components/Navigation/TheSidebar'
 import TheSidebarContent from '@/components/Navigation/TheSidebarContent'
@@ -25,6 +25,16 @@ export default {
     TheSidebar,
     TheSidebarContent,
     TheFooter
+  },
+  methods: {
+    ...mapActions({
+      setOceanData: 'oceandata/loadItems',
+      setHistoryData: 'oceandata/loadHistoryItems'
+    })
+  },
+  beforeMount() {
+    this.setOceanData()
+    this.setHistoryData()
   }
 }
 </script>

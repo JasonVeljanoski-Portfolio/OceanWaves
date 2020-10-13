@@ -1,12 +1,16 @@
 // vuex data
 export const state = () => ({
-    oceanData: []
+    oceanData: [],
+    historyData: []
   })
  
 // synchronous way to update the state in our vuex store (synchronous setter)
 export const mutations = {
-    setOceanData(state, payload) {
+    SET_OCEANDATA(state, payload) {
         state.oceanData = payload
+    },
+    SET_HISTORYDATA(state, payload) {
+      state.historyData = payload
     }
 }
   
@@ -14,15 +18,23 @@ export const mutations = {
 export const getters = {
   getOceanData(state) {
     return state.oceanData
+  },
+  getHistoryData(state) {
+    return state.historyData
   }
 }
 
 // asynchronous way to update state (asynchronous setter)
 export const actions = {
 
-    async setOceanData(state, payload) {
-        const { data } = await this.$axios.$get('/oceanwaves')
-        state.commit('setOceanData', data)   // commit is to use the setter in mutations called 'setOceanData'
+    async loadItems ( { commit } ) {
+      const { data } = await this.$axios.$get('/oceanwaves')
+      commit( 'SET_OCEANDATA', data )
+    },
+
+    async loadHistoryItems ( { commit } ) {
+      const { data } = await this.$axios.$get('/historywaves')
+      commit( 'SET_HISTORYDATA', data )
     }
 
 }
